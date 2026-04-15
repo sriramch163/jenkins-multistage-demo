@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -26,16 +25,16 @@ pipeline {
                 changeRequest()
             }
             steps {
-                input message: "Approve this PR?"
+                input message: 'Approve this PR?', ok: 'Approve'
             }
         }
 
         stage('Deploy to Dev') {
             when {
-                branch 'dev'
+                changeRequest()
             }
             steps {
-                echo "Deploying to DEV"
+                echo "Deploying to DEV..."
             }
         }
 
@@ -44,7 +43,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "Deploying to PRODUCTION"
+                echo "Deploying to PROD..."
             }
         }
     }
